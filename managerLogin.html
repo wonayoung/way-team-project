@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title></title>
+		
+        <!-- js 갑자기 안됨
+        <script type="text/javascript" src="js_way.js">
+		</script>-->
+		<script>
+			function onEnterSubmitSearch()         //검색창        
+			{
+  				var keyCode = window.event.keyCode;
+   				if(keyCode==13)  searchPrd.submit();   
+			}
+
+			function login_check()      // 로그인시 미입력항목 부분을 체크해주는 자바스크립트 함수
+			{
+				if(document.login.id.value=="")
+				{
+    				alert("아이디를 입력해 주세요.");
+    				document.login.id.focus();
+    				return;	
+				 }
+
+				if(document.login.pw.value=="")
+				{
+    				alert("비밀번호를 입력해 주세요.");
+    				document.login.pw.focus();			
+    				return;
+				}
+		
+				document.login.submit();
+			}
+
+
+
+function onEnterSubmitLogin()     // 로그인버튼을 클릭하지 않고, 엔터키를 입력하더라도 로그인 가능하게 해줌               
+{
+  	var keyCode = window.event.keyCode;
+   	if(keyCode==13)  login.submit();    //  "keyCode==13"은 엔터키가 입력됨을 의미함
+}
+	
+
+function login_focus()    
+{										
+   	document.login.id.focus();
+   	return;
+}
+		</script>
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+<body onLoad="login_focus()" style="overflow-x:hidden; overflow-y:auto;">
+
+        <!-- Navigation-->
+<div class="container1 px-4 px-lg-5">
+
+  <div class="service"><a href="login.html">관리자 로그인</a>&nbsp;&nbsp; <a href="signUp.jsp"> 회원가입</a>&nbsp; &nbsp; 고객센터</div>
+</div>
+        <nav class="navbar navbar-expand-lg navbar-light">
+			
+          <div class="container px-4 px-lg-5">
+				
+                <div class="navbar-brand"  onclick='window.location.href = "index.jsp"'></div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+					  <div class="dropdown">
+          <a class="nav-link"  href="#">건강고민</a>
+                         </div>
+                    
+					  <div class="dropdown">
+                        <a class="nav-link"  href="#" >상품</a>
+						<div class="dropdown-content">
+        <a href="#">Best</a>
+        <a href="#">전체상품</a>
+							  <a href="signup.html">섭취대상별</a>
+							 <a href="login.html">성분별</a>
+      </div>
+                      </div>    
+                      <a class="nav-link" href="#">권장량 계산</a>
+					
+                      <a class="nav-link "  href="#" >이벤트</a>
+					
+                           
+                    </ul>
+                  <div class="d-flex">
+					  
+                    <input type="search" class="btn img_bar" placeholder="검색어를 입력하세요" >
+                 
+                 </div>
+				  <div class="icon_user"></div>
+					 <div class="icon_cart"></div>
+            </div>
+            </div>
+        </nav>
+				 <header class=" py-5">
+		
+				<div class="footer_title">관리자 로그인</div>
+					
+					  					<div class="container px-4 px-lg-5 mt-5">
+									 <form name="login" method="post" action="managerLoginOK.jsp"><div class="signUp3"><br>	
+					 
+<input type="text" name="id" class="inputtext01" placeholder="아이디 입력해주세요"><br><br>
+<input type="password" name="pw" class="inputtext01" placeholder="비밀번호를 입력해주세요" onkeydown="onEnterSubmitLogin()"><br><br>
+										
+				<input type="button" value="관리자 로그인" onClick="login_check()" class="btn_submit">
+				<p></p>
+		 </div>
+										 </form>
+						  </div>
+						 
+					
+        </header>
+<!-- Footer-->
+       <footer>
+          
+    <div class="footer_container">
+      <div class="footer_text">
+        <p class="m-0 text-center text-white">WAY<br> <a href="company.html">회사소개</a> <a href="terms.html">이용약관</a> <a href="privacy.html">개인정보취급처리방침</a> <a href="advertisement.html">광고문의</a> <a href="managerLogin.html">관리자로그인</a><br><br>
+          대표 : 정정정 | 이메일 : cs@way.com | 문의전화 : 02-0000-0000 <br>사업자등록번호 : 200-00-00000 통신판매업신고 : 2022-서울강남-00000 <br>주소 : 서울 강남구 XX동 XX로 11-77 Copyright © <br><br>way. All Rights Reserved.</p>
+       
+      </div>
+    </div>
+            
+    </footer>
+	</body>
+	</html>

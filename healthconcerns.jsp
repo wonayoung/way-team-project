@@ -1,0 +1,650 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+      <!-- Link Swiper's CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+    />
+    <!-- 모든 html에 폰트 적용을 위한 소스 -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<!-- 헤더고정 지우지 마세요 -->
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
+        <title></title>
+		<style>
+  .swiper {
+        width: 100%;
+        height: 100%;
+      }
+
+      .swiper-slide  {
+        text-align: center;
+        font-size: 18px;
+	
+        background: #fff;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+			</style>
+        
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+
+    <body onLoad="MM_preloadImages('images/next.png')" style="overflow-x:hidden; overflow-y:auto;">
+
+      <div class="top_fix_zone" id="topBar">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container px-4 px-lg-5">
+            <div class="navbar-brand"  onclick='window.location.href = "index.jsp"'></div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="hamburger">
+              <div class="_layer -top"></div>
+              <div class="_layer -mid"></div>
+              <div class="_layer -bottom"></div>
+            </div>
+            <nav class="menuppal">
+              <ul>
+                <li>
+                  <a href="healthconcerns.jsp">건강고민</a>
+                </li>
+                <li>
+                <a href="viewProductAll.jsp">영양제</a>
+                <ul>
+                  <li><a href="viewProductBest.jsp">Best</a></li>
+                  <li><a href="viewProductAll.jsp">전체상품</a></li>
+                  <li><a href="viewProductByTarget.jsp">섭취대상별</a></li>
+                  <li><a href="viewProductByNutri.jsp">성분별</a></li>
+                  </li>
+                </ul>
+                <li><a href="nutriGraph.jsp">권장량 계산</a></li>
+                <li><a href="#">건강정보</a></li>
+              </ul>
+            </nav>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <div class="dropdown"><a class="nav-link"  href="healthconcerns.jsp?concerns=뇌">건강고민</a> </div>
+                <div class="dropdown"> <a class="nav-link"  href="viewProductAll.jsp" >상품</a>
+                  <div class="dropdown-content"> <a href="viewProductAll.jsp">
+                    <div class="nav_pad">전체상품</div>
+              <a href="viewProductBest.jsp">Best</a>
+                    </a> <a href="viewProductByTarget.jsp?nutri1=vitC&nutri2=hyalAcid">섭취대상별</a> <a href="viewProductByNutri.jsp?nutri=vitK">성분별</a> </div>
+                </div>
+                <a class="nav-link" href="nutriGraph.jsp">권장량 계산</a> <a class="nav-link "  href="event.html" >건강정보</a>
+              </ul>
+              <div class="d-flex"> 
+                
+                <!--검색창-->
+             <!-- 헤더고정 -->
+            
+      <span class="top_bn_zone"> 
+        <!-- Navigation-->
+      <%
+        String id = (String)session.getAttribute("sid");
+        
+        if(id!=null)
+        {
+      %>
+        
+        <span class="container1 px-4 px-lg-5">
+          <span class="service"><a href="logout.jsp">로그아웃</a></span>
+        </span>
+        
+        <%
+        }
+        else
+        {
+      %>
+        <!-- Navigation-->
+         <span class="container1 px-4 px-lg-5">
+            <span class="service"><a href="login.html">로그인</a> &nbsp;&nbsp; &nbsp; <a href="signUp.jsp"> 회원가입 </a></span>
+        </span>
+        <%
+        }
+      %>
+      </div>
+                  <a class="icon_search" href="searchResults.jsp"></a> 
+             
+              <a class="icon_user" href="myDeliveryTracking.jsp"></a> <a class="icon_cart" href="showCart.jsp"></a>
+               
+            
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+				
+        			
+        <!-- Header-->
+        <!-- Section-->
+		 
+      <section class="py-3">
+		  <p class="MD title">건강고민</p>
+           <div class="sub_title">홈 > 건강고민</div>
+		 </section>
+<div class="container px-4 px-lg-5 mt-5">
+		
+<div class="row gx-4 gx-lg-5 row-cols-4 row-cols-md-6 row-cols-xl-9 justify-content-center">
+<div class="col mb-5">
+                    <div class="card h-25">
+                            <!-- Product image-->
+                      <a href="healthconcerns.jsp?concerns=brain"><img src="images/icon/recommend_icon1.png" class="recommend_img_icon" alt=""></a>
+
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <a href="healthconcerns.jsp?concerns=brain"><div class="fw-bolder2">두뇌</a> 
+									
+									</div>
+								 
+                                    
+                              </div>
+                          </div>
+                            
+        </div>
+      </div>
+	 <div class="col mb-5">
+                    <div class="card h-25">
+                            <!-- Product image-->
+                            <a href="healthconcerns.jsp?concerns=skin"><img src="images/icon/recommend_icon2.png" class="recommend_img_icon" alt=""/></a>
+<!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                  <a href="healthconcerns.jsp?concerns=skin"><div class="fw-bolder2">피부</a>
+									</div>
+								 
+                                    
+                              </div>
+                      </div>
+                            
+        </div>
+      </div>
+	<div class="col mb-5">
+                    <div class="card h-25">
+                            <!-- Product image-->
+                      <a href="healthconcerns.jsp?concerns=pressure"><img src="images/icon/recommend_icon3.png" class="recommend_img_icon" /></a>
+<!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                  <a href="healthconcerns.jsp?concerns=pressure"><div class="fw-bolder2">혈압</a>
+									</div>
+								 
+                                    
+                              </div>
+                      </div>
+                            
+        </div>
+      </div>
+	<div class="col mb-5">
+                    <div class="card h-25">
+                            <!-- Product image-->
+                            <a href="healthconcerns.jsp?concerns=circulation"><img src="images/icon/recommend_icon4.png" class="recommend_img_icon"  alt=""/></a>
+<div class="card-body p-4">
+              <div class="text-center">
+                                    <!-- Product name-->
+                <a href="healthconcerns.jsp?concerns=circulation"><div class="fw-bolder2">혈액순환</a>
+									</div>
+								 
+                                    
+            </div>
+                      </div>
+                            
+        </div>
+      </div>
+	 <div class="col mb-5">
+        <div class="card h-25">
+                            <!-- Product image-->
+          <a href="healthconcerns.jsp?concerns=joint"><img src="images/icon/recommend_icon5.png" class="recommend_img_icon"  alt=""/></a>
+<div class="card-body p-4">
+              <div class="text-center">
+                                    <!-- Product name-->
+                <a href="healthconcerns.jsp?concerns=joint"><div class="fw-bolder2">관절</a>
+				</div>
+								 
+                                    
+            </div>
+          </div>
+                            
+        </div>
+      </div>
+	 <div class="col mb-5">
+        <div class="card h-25">
+                            <!-- Product image-->
+          <a href="healthconcerns.jsp?concerns=eyes"><img src="images/icon/recommend_icon6.png" class="recommend_img_icon"  alt=""/></a>
+<div class="card-body p-4">
+              <div class="text-center">
+                                    <!-- Product name-->
+                                    <a href="healthconcerns.jsp?concerns=eyes"><div class="fw-bolder2">눈</a>
+									</div>
+								 
+                                    
+            </div>
+          </div>
+                            
+        </div>
+      </div>
+                     <div class="col mb-5">
+                    <div class="card h-25">
+                            <!-- Product image-->
+                      <a href="healthconcerns.jsp?concerns=teeth"><img src="images/icon/recommend_icon7.png" class="recommend_img_icon"  alt=""/></a>
+<div class="card-body p-4">
+              <div class="text-center">
+                                    <!-- Product name-->
+                                    <a href="healthconcerns.jsp?concerns=teeth"><div class="fw-bolder2">치아</a>
+									</div>
+								 
+                                    
+            </div>
+                      </div>
+                            
+        </div>
+      </div>
+                     <div class="col mb-5">
+                    <div class="card h-25">
+                            <!-- Product image-->
+                      <a href="healthconcerns.jsp?concerns=intestine"><img src="images/icon/recommend_icon8.png" class="recommend_img_icon"  alt=""/></a>
+<div class="card-body p-4">
+              <div class="text-center">
+                                    <!-- Product name-->
+                                    <a href="healthconcerns.jsp?concerns=intestine"><div class="fw-bolder2">장</a>
+									</div>
+								 
+                                    
+            </div>
+                      </div>
+                            
+        </div>
+      </div>
+	 <div class="col mb-5">
+                    <div class="card h-25">
+                            <!-- Product image-->
+                      <a href="healthconcerns.jsp?concerns=liver"><img src="images/icon/recommend_icon9.png" class="recommend_img_icon"  alt=""/></a>
+<div class="card-body p-4">
+              <div class="text-center">
+                                    <!-- Product name-->
+                                    <a href="healthconcerns.jsp?concerns=liver"><div class="fw-bolder2">간</a>
+									</div>
+								 
+                                    
+            </div>
+                      </div>
+                            
+        </div>
+      </div>
+               
+    </div>
+    </div>
+	
+    
+    	 <div class="container  px-4 px-lg-5">
+<div class="swiper_title">어떤 건강고민이 있으신가요?</div>
+<div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><a href="healthconcerns.jsp?concerns=brain"><img src="images/recommend/recommend_001.png" alt=""/></a> </div>
+          <div class="swiper-slide"><a href="healthconcerns.jsp?concerns=skin"><img src="images/recommend/recommend_002.png" alt=""/></a></div>
+          <div class="swiper-slide"><a href="healthconcerns.jsp?concerns=pressure"><img src="images/recommend/recommend_003.png" alt=""/></a></div>
+          <div class="swiper-slide"><a href="healthconcerns.jsp?concerns=circulation"><img src="images/recommend/recommend_004.png"  alt=""/></a></div>
+          <div class="swiper-slide"><a href="healthconcerns.jsp?concerns=joint"><img src="images/recommend/recommend_005.png" alt=""/></a></div>
+          <div class="swiper-slide"><a href="healthconcerns.jsp?concerns=eyes"><img src="images/recommend/recommend_006.png"  alt=""/></a></div>
+          <div class="swiper-slide"><a href="healthconcerns.jsp?concerns=teeth"><img src="images/recommend/recommend_007.png" alt=""/></a></div>
+          <div class="swiper-slide"><a href="healthconcerns.jsp?concerns=intestine"><img src="images/recommend/recommend_008.png"  alt=""/></a></div>
+          <div class="swiper-slide"><a href="healthconcerns.jsp?concerns=liver"><img src="images/recommend/recommend_009.png"  alt=""/></a></div>
+      </div>
+    
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      
+    </div>
+<%
+
+	String concerns = request.getParameter("concerns");
+
+
+	String DB_URL="jdbc:mysql://localhost:3306/way";  
+    String DB_ID="multi";  
+    String DB_PASSWORD="abcd"; 
+ 	 
+	Class.forName("org.gjt.mm.mysql.Driver");  
+ 	Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PASSWORD); 
+	
+	
+	String sql1 = "select * from concerns where concerns = ?";
+	PreparedStatement pstmt1 = con.prepareStatement(sql1);
+	pstmt1.setString(1, concerns);
+
+	ResultSet rs1 = pstmt1.executeQuery();
+
+	if(rs1.next())
+	{
+	String nutri1 = rs1.getString("nutri1");
+	String nutri2 = rs1.getString("nutri2");
+
+	String one = "";
+	String two = "";
+
+	if(nutri1.equals("vitK")){
+		one = "비타민K";
+	}
+	else if(nutri1.equals("vitC")){
+		one = "비타민C";
+	}
+	else if(nutri1.equals("thistle")){
+		one = "밀크씨슬";
+	}
+	else if(nutri1.equals("Q10")){
+		one = "큐엔자임";
+	}
+	else if(nutri1.equals("omega3")){
+		one = "오메가3";
+	}
+	else if(nutri1.equals("multi")){
+		one = "종합비타민";
+	}
+	else if(nutri1.equals("lutein")){
+		one = "루테인";
+	}
+	else if(nutri1.equals("lacto")){
+		one = "유산균";
+	}
+	else if(nutri1.equals("hyalAcid")){
+		one = "히알루론산";
+	}
+	else if(nutri1.equals("enzyme")){
+		one = "효소";
+	}
+	else if(nutri1.equals("calcium")){
+		one = "칼슘";
+	}
+	//증상 한글화
+	if(concerns.equals("brain")){
+		concerns = "두뇌";
+	}
+	else if(concerns.equals("skin")){
+		concerns = "피부";
+	}
+	else if(concerns.equals("pressure")){
+		concerns = "혈압";
+	}
+	else if(concerns.equals("circulation")){
+		concerns = "혈액순환";
+	}
+	else if(concerns.equals("joint")){
+		concerns = "관절";
+	}
+	else if(concerns.equals("eyes")){
+		concerns = "눈";
+	}
+	else if(concerns.equals("teeth")){
+		concerns = "치아";
+	}
+	else if(concerns.equals("intestine")){
+		concerns = "장";
+	}
+	else if(concerns.equals("liver")){
+		concerns = "간";
+	}
+	
+%>
+<div class="container px-4 px-lg-5 mt-5">
+	  <div class="swiper_title"><%=concerns%> 건강에는 이런 제품을 추천해요</div>
+        <div class="choice">#<%=one%></div>
+<div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-4 justify-content-center">
+<%
+	String sql2 = "select prdNo from product where chiefNutri = ?";
+	PreparedStatement pstmt2 = con.prepareStatement(sql2);
+	pstmt2.setString(1, nutri1);
+
+	ResultSet rs2 = pstmt2.executeQuery();
+
+	while(rs2.next())
+	{
+		String no = rs2.getString("prdNo");
+
+		String sql3 = "select * from product where prdNo = ?";
+		PreparedStatement pstmt3 = con.prepareStatement(sql3);
+		pstmt3.setString(1, no);
+
+		ResultSet rs3 = pstmt3.executeQuery();
+
+		rs3.next();
+
+		String name = rs3.getString("prdName");
+		int price = rs3.getInt("prdPrice");
+		int salePrice = rs3.getInt("salePrice");
+
+%>
+    
+<div class="col mb-5">
+                    <div class="card h-100">
+                            <!-- Product image-->
+							<a href="viewDetailProduct.jsp?prdNo=<%=no%>">
+                            <img src="prdImages\<%=no%>_main.jpg" height="289" class="card-img-top" />
+							</a>
+
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <div class="fw-bolder"><a href="viewDetailProduct.jsp?prdNo=<%=no%>"><%=name%></a> 
+									
+								  </div>
+								  <div class="fw-bolder1">
+								    <div class="money"><%=price%>원</div>
+                                  <span style="color: #000099; font-weight: bolder;"><%=salePrice%>원</span></div>
+                                    <!-- Product price-->
+                                    
+                              </div>
+                          </div>
+                            
+        </div>
+      </div>
+<%
+	}
+if(nutri2 != null)
+{
+	if(nutri2.equals("vitK")){
+		two = "#비타민K";
+	}
+	else if(nutri2.equals("vitC")){
+		two = "#비타민C";
+	}
+	else if(nutri2.equals("thistle")){
+		two = "#밀크씨슬";
+	}
+	else if(nutri2.equals("Q10")){
+		two = "#큐엔자임";
+	}
+	else if(nutri2.equals("omega3")){
+		two = "#오메가3";
+	}
+	else if(nutri2.equals("multi")){
+		two = "#종합비타민";
+	}
+	else if(nutri2.equals("lutein")){
+		two = "#루테인";
+	}
+	else if(nutri2.equals("lacto")){
+		two = "#유산균";
+	}
+	else if(nutri2.equals("hyalAcid")){
+		two = "#히알루론산";
+	}
+	else if(nutri2.equals("enzyme")){
+		two = "#효소";
+	}
+	else if(nutri2.equals("calcium")){
+		two = "#칼슘";
+	}
+%>
+</div>
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="choice"><%=two%></div>
+<div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-4 justify-content-center">
+<%
+	String sql4 = "select prdNo from product where chiefNutri = ?";
+	PreparedStatement pstmt4 = con.prepareStatement(sql4);
+	pstmt4.setString(1, nutri2);
+
+	ResultSet rs4 = pstmt4.executeQuery();
+
+	while(rs4.next())
+	{
+		String no2 = rs4.getString("prdNo");
+
+		String sql5 = "select * from product where prdNo = ?";
+		PreparedStatement pstmt5 = con.prepareStatement(sql5);
+		pstmt5.setString(1, no2);
+
+		ResultSet rs5 = pstmt5.executeQuery();
+
+		rs5.next();
+
+		String name = rs5.getString("prdName");
+		int price = rs5.getInt("prdPrice");
+		int salePrice = rs5.getInt("salePrice");
+
+%>
+
+	 <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <a href="viewDetailProduct.jsp?prdNo=<%=no2%>">
+                            <img src="prdImages\<%=no2%>_main.jpg" height="289" class="card-img-top" />
+							</a>
+
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <div class="fw-bolder"><a href="viewDetailProduct.jsp?prdNo=<%=no2%>"><%=name%></a>
+									
+								  </div>
+								  <div class="fw-bolder1">
+								    <div class="money"><%=price%>원</div>
+                                  <span style="color: #000099; font-weight: bolder;"><%=salePrice%>원</span></div>
+                                    <!-- Product price-->
+                                    
+                              </div>
+                          </div>
+                            
+            </div>
+      </div>
+<%
+	}
+}
+}
+%>
+	 
+                                    
+
+                            
+            </div>
+      </div>
+                    
+                    
+               
+      </div>
+    </div>
+<section class="py-3"></section>
+				
+  <!--고객센터 버튼 모든 html에 적용해주세요-->
+  <div class="wrapper">
+    <div class="contact-form-page">
+       <div class="form-head">
+           <div class="header-btn">
+               <a class="top-btn" href="#"><i class="fa fa-times"></i></a>
+           </div>
+       </div>
+    
+<div class="body_chat">
+ <div class="box_chat">  <div class="title_chat1"><img src="images/logo.png"  alt=""/></div>
+ 
+   <div class="title_chat">상담사 우니</div><br>
+           <div class="text_chat">환영합니다~! <br>무엇을 도와드릴까요?</div>
+  <a class="btn_chat" href="inquiry.jsp">1:1문의하기</a><br>
+  <a class="btn_chat1" href="qna1.jsp">고객센터</a>
+   </div>
+    </div>
+    </div>
+       <a class="buttom-btn" ><i class="fa fa-times"></i></a>
+   </div>
+
+<a class="github-source"   target="_blank"><i class="fa fa-github"></i></a>
+<!--위로가기 버튼 모든 html에 적용해주세요-->
+<a href="#" class="go-top"></a> 
+
+<!-- Footer-->
+<footer>
+<div class="footer_container">
+ <div class="container px-4 px-lg-5">
+   <div class="footer_text">
+     <p class="m-0 text-center text-white">WAY<br>
+       <a href="company.jsp">회사소개</a> <a href="terms.jsp">이용약관</a> <a href="privacy.jsp">개인정보취급처리방침</a> <a href="advertisement.jsp">광고문의</a> <a href="managerLogin.jsp">관리자로그인</a><br>
+       <br>
+       대표 : 정정정 | 이메일 : cs@way.com | 문의전화 : 02-0000-0000 <br>
+       사업자등록번호 : 200-00-00000 통신판매업신고 : 2022-서울강남-00000 <br>
+       주소 : 서울 강남구 XX동 XX로 11-77 <br>
+       <br>
+       Copyright © way. All Rights Reserved.</p>
+   </div>
+ </div>
+</div>
+</footer>
+</form>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 2,
+        spaceBetween: 30,
+        slidesPerGroup: 2,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    </script>
+		  	 <script src="js/chat.js"></script> 
+         <script src="js/top.js"></script> <!-- top버튼 생성-->
+         <script src="js/autonav.js"></script> <!-- 헤더 고정-->
+         <script src="js/autoslide.js"></script> 
+         <script src="button.js"></script> <!--모바일 메뉴-->
+</body>
+	</html>

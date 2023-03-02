@@ -1,0 +1,322 @@
+<%@ page contentType="text/html;charset=euc-kr" %>
+<%@ page import="java.sql.*, java.text.*" %>         
+<html>
+   <head>
+   <title>게시판 리스트 보기</title>
+    
+        <link href="css/styles.css" rel="stylesheet" />
+    <style type="text/css">
+     a:link { text-decoration: none; color: black; }           <!-- 클릭하기전의 설정은 선없고 검정색 -->
+     a:visited { text-decoration: none; color: black; }     <!-- 방문한뒤의 설정은 밑줄없고 검정 -->
+     a:hover { text-decoration: underline; color:blue; } <!-- 마우스가 올라갈때 설정은 아랫줄있고 파랑 -->
+    </style>
+   
+   </head>      
+
+   <%
+       String DB_URL="jdbc:mysql://localhost:3306/project";  
+       String DB_ID="multi";  
+       String DB_PASSWORD="abcd"; 
+ 	 
+	   Class.forName("org.gjt.mm.mysql.Driver");  
+ 	   Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PASSWORD); 
+
+		request.setCharacterEncoding("euc-kr");
+
+		String group_index;
+		int list_index;
+
+		group_index = request.getParameter("group_index");
+		//첫 페이지는 group_index 값이 0
+		   
+		if (group_index != null) 	
+				list_index = Integer.parseInt(group_index);  
+		else 
+				list_index = 0;     //현재 페이지 수 
+
+		//board 테이블에 있는 총 자료의 수(글의 개수) 알아 오기
+		String jsql = "select count(*) from board";
+		PreparedStatement pstmt1 = con.prepareStatement(jsql);
+		ResultSet cntRs = pstmt1.executeQuery();	
+
+		cntRs.next();
+		int cnt = cntRs.getInt(1);//글의 총 개수
+
+		//한 페이지에 20개의 글 출력하기 위해
+		//글의 개수를 20으로 나누어 페이지 계산
+		int cntList = cnt/20; // 페이지 수 계산하기 위한 변수 
+		int remainder = cnt%20; //나머지
+		int cntList_1;//총페이지 수
+			
+		//1(21, 41, 61, 81, ...)번째 글이 올라올 때 총 페이지 수 1 증가
+		if (cntList != 0) //글이 20개이상이면
+		{
+			   if (remainder == 0)	 //20으로 나눈 나머지가 없으면		
+				  cntList_1 = cntList;  //몫이 페이지 수          
+			   else                    //나머지가 있으면
+				   cntList_1 = cntList + 1; //몫에 1 더한 값이 총페이지 수		  
+		 } 
+		 else 		 
+			  cntList_1 = cntList + 1; //총페이지 수		
+			   
+		cntRs.close();
+			
+		String jsql2 = "select * from board order by masterid desc, replynum, step, no";
+		PreparedStatement pstmt2 = con.prepareStatement(jsql2);
+		ResultSet rs = pstmt2.executeQuery();
+   %>
+  
+   <body>
+	   <div class="container1 px-4 px-lg-5">
+
+  <div class="service"><a href="login.jsp">로그인</a>&nbsp;&nbsp; <a href="signup.jsp"> 회원가입</a>&nbsp; &nbsp; 고객센터</div>
+</div>
+        <nav class="navbar navbar-expand-lg navbar-light">
+			
+          <div class="container px-4 px-lg-5">
+				
+                <div class="navbar-brand"></div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+					  <div class="dropdown">
+          <a class="nav-link"  href="#">건강고민</a>
+                      </div>
+                    
+					  <div class="dropdown">
+                        <a class="nav-link"  href="#" >상품</a>
+						<div class="dropdown-content">
+        <a href="#">Best</a>
+        <a href="#">전체상품</a>
+							  <a href="signup.html">섭취대상별</a>
+							 <a href="login.html">성분별</a>
+      </div>
+                      </div>    
+                      <a class="nav-link" href="#">권장량 계산</a>
+					
+                      <a class="nav-link "  href="#" >이벤트</a>
+					
+                           
+                    </ul>
+                  <div class="d-flex">
+					  
+                    <input type="search" class="btn img_bar" placeholder="검색어를 입력하세요" >
+                 
+                 </div>
+				  <div class="icon_user"></div>
+					 <div class="icon_cart"></div>
+            </div>
+          </div>
+        </nav>
+ <header class=" py-5">
+          
+			
+					<div class="container px-4 px-lg-5">
+	
+<div class="container">
+    <div class="menu_01">
+<div class="menu_target">MY PAGE</div>
+				
+<br>
+
+<div class="left_menu_bar"><a>주문/배송</a> <br>
+				<a>회원 정보</a>
+				<br>
+				<a>관심상품</a>
+				<br>
+				<a>적립금</a>
+				<br>
+				<a>문의현황</a></div>
+    </div>
+       </div>
+								
+<div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-1 justify-content-center">
+<div class="col mb-5">
+                
+				<div class="left_username">user님 반갑습니다.</div>
+<hr class="hr_username"><p class="blank"></p>
+					<span class="checkboxfont1">문의현황</span><p></p>
+     <div align="center">
+        <br><br>
+        <table width="800" border="0" cellspacing="0" cellpadding="5" >
+          <tr>
+             <td colspan="5">        
+                <div align="center"><font size=6 color=blue><게 시 판></font></div>
+              </td>
+           </tr>
+           <tr>
+              <td colspan="5">
+                 <div align="right"><font size=2 >현재 페이지 / 총 페이지 &nbsp(<%= list_index + 1 %> / <%= cntList_1 %>)</font></div>
+              </td>
+           </tr>
+		   </table>
+
+   	<table border='0' width='800' cellpadding='0' cellspacing='0'>
+	<tr>
+		<td><hr size='1'>
+		</td>
+ 	</tr>
+   </table>  
+
+      <table width="800" border="0" cellspacing="2" cellpadding="3">
+ 	   <tr class="bg_color">
+ 	      <td width="50" height="20">
+ 	         <div align="center"><font size=2>상품명</font></div>
+ 	      </td>
+ 	      <td width="480" height="20">
+ 	         <div align="center"><font size=2>문의내용</font></div>
+ 	      </td> 	      
+ 	     
+ 	      <td width="120" height="20" colspan="2">
+ 	         <div align="center"><font size=2>등록일</font></div>
+ 	      </td>
+ 	      <td width="50" height="20">
+ 	         <div align="center"><font size=2>답변여부</font></div>
+ 	      </td>
+ 	   </tr>
+ 	   
+    <%
+	if (!rs.wasNull()) 
+	{
+	   for(int i = 0; i < list_index * 20; i++) 
+	      rs.next();
+
+       int cursor = 0;
+       while (rs.next()) 
+	   {
+              int idx = rs.getInt("idx");
+              int no = rs.getInt("no");
+              String subject = rs.getString("subject");
+			  String name = rs.getString("name");
+              String email = rs.getString("email");
+              String ymd = rs.getString("ymd");
+              int readcount = rs.getInt("readcount");
+              int step = rs.getInt("step");
+    %> 	   
+   
+ 	   <tr bgcolor='white'>
+ 	      <td>
+ 	         <div align="center"><font size=2><%=no%></font></div>
+ 	      </td>
+ 	      <td>
+    <%
+		   //답변글일 경우 두 칸 안으로 들여 쓰기
+             if (step > 0) 
+		   {
+                    for(int vacant=0; vacant < step; vacant++) 
+					{
+    %>
+    		 &nbsp;&nbsp;
+    		 
+    <%
+    		        }
+           }
+    %>
+ 	         <a href="board_view.jsp?idx=<%=idx%>"><font size=2><%=subject%></font></a>
+ 	      </td> 	      
+ 	      <td colspan="2">
+ 	         <div align="center"><a href="mailto:<%=email%>"><font size=2><%=name%></font></a></div>
+ 	      </td>
+
+ 	            
+ 	      <td>
+ 	         <div align="center"><font size=2><%=readcount%></font></div>
+ 	      </td>
+ 	   </tr>  	   
+
+   <%
+	   //while 문이 반복 수행될 때마다 cursor를 1씩 증가
+		 cursor ++;
+         if (cursor >= 20) break; 
+        }   // while문의 끝
+    }  //  if문의 끝
+   %>
+   
+   	<table border='0' width='800' cellpadding='0' cellspacing='0'>
+	<tr>
+		<td><hr size='1'>
+		</td>
+ 	</tr>
+</table>  
+
+
+     <div align="center">
+        <table width="700" border="0" cellspacing="0" cellpadding="5">
+          <tr>&nbsp;</tr><tr>
+             <td colspan="5">        
+                <div align="center">
+		<%
+			//첫페이지 (group_index 값이 0)로 이동할 수 있게끔 링크
+		%>
+        <%= "["%><a href="board_list.jsp?group_index=0"><font size=2>처음</font></a><%="]" %>
+        &nbsp;&nbsp;&nbsp;
+                
+   <% 
+   //페이지 번호를 출력 및 링크시키기 위한 변수들을 선언
+       int startpage=1;
+       int maxpage = cntList_1;
+       int endpage = startpage + maxpage -1;
+
+	//보여줄 페이지가 속한 그룹의 첫번째 페이지부터 마지막 페이지까지의 링크를 추가
+       for (int j=startpage; j<=endpage; j++) 
+	   {
+           if(j == list_index+1) 
+		   {
+   %>
+               <%= j %>
+   <%
+            } 
+            else 
+			{
+   %>
+        <a href="board_list.jsp?group_index=<%= j - 1 %>"><%= j %></a>
+   <%
+            }
+       }
+   %>
+    
+      &nbsp;&nbsp;&nbsp;
+	  <%
+			//마지막 페이지로 이동할 수 있게끔 링크
+	   %>
+      <%= "["%><a href="board_list.jsp?group_index=<%= cntList_1 - 1 %>"><font size=2>끝</font></a><%="]" %>
+    
+             </td>
+          </tr>                
+          <tr>
+             <td colspan="5">
+                <div align="center">  
+        <center>
+        <a href="board_write.jsp"><input type="button" class="btn_write" value="문의하기"></a>
+		<br><br>
+        </center> 
+	 </div>
+        </td>
+      </tr>
+    </table>
+</div>
+			</div>
+	   </div>
+   </div>
+			   </div>
+</form>
+<header class=" py-6"></header>
+				
+
+<!-- Footer-->
+         <footer>
+			 
+		    
+    <div class="footer_container">
+      <div class="footer_text">
+        <p class="m-0 text-center text-white">WAY<br> 회사소개 이용약관 개인정보취급처리방침 광고문의 관리자로그인<br><br>
+          대표 : 정정정 | 이메일 : cs@way.com | 문의전화 : 02-0000-0000 <br>사업자등록번호 : 200-00-00000 통신판매업신고 : 2022-서울강남-00000 <br>주소 : 서울 강남구 XX동 XX로 11-77 Copyright © <br><br>way. All Rights Reserved.</p>
+		 
+      </div>
+    </div>
+				
+    </footer>
+		
+		  
+</body>
+	</html>

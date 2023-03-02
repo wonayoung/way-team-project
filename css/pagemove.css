@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.next   {
+	font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-medium) var(--unnamed-font-size-22)/var(--unnamed-line-spacing-32) var(--unnamed-font-family-noto-sans-kr);
+letter-spacing: var(--unnamed-character-spacing--0-44);
+color: var(--unnamed-color-707070);
+text-align: center;
+font: normal normal medium 22px/32px Noto Sans KR;
+letter-spacing: -0.44px;
+color: #707070;
+opacity: 1;
+	float: right;
+	margin-top: -13px;
+	    position: relative;
+    left: -8px;
+}

@@ -1,0 +1,69 @@
+<%@ page contentType="text/html;charset=euc-kr" %>
+<%@ page import="java.sql.*" %>
+<html><head><title>상품 정보 수정 결과</title></head>
+<body><center>
+
+<%
+	 request.setCharacterEncoding("euc-kr");
+	
+	 String no = request.getParameter("no");
+     String	name = request.getParameter("name");
+     int price = Integer.parseInt(request.getParameter("price")); //정수형으로 변환
+     String	company = request.getParameter("company");
+     int stock = Integer.parseInt(request.getParameter("stock")); //정수형으로 변환
+	 String description = request.getParameter("description");
+ 	 String ctg = request.getParameter("ctg");
+
+try {
+ 	 String DB_URL="jdbc:mysql://localhost:3306/project";  //  접속할 DB명
+     String DB_ID="multi";  //  접속할 아이디
+     String DB_PASSWORD="abcd"; // 접속할 패스워드
+ 	 
+	 Class.forName("org.gjt.mm.mysql.Driver");  // JDBC 드라이버 로딩
+ 	 Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PASSWORD); 
+     // DB에 접속
+
+     // 상품정보를 수정하기 위한 SQL문 작성
+	 String jsql = "UPDATE GOODS SET prdName=?, prdPrice=?, prdCompany=?, ";
+     jsql = jsql + "prdStock=?, prdDescription=?, ctgType=? WHERE prdNo=?";  
+	 PreparedStatement  pstmt = con.prepareStatement(jsql);
+     pstmt.setString(1, name);
+	 pstmt.setInt(2, price);  
+	 pstmt.setString(3, company);
+	 pstmt.setInt(4, stock);
+	 pstmt.setString(5, description);
+	 pstmt.setString(6, ctg);
+	 pstmt.setString(7, no); 
+
+     pstmt.executeUpdate();  
+	 //   여기까지해서 DB에 상품정보를 수정(갱신)하는 부분은 완료됨!
+     //   이후부터 나오는 내용은 수정한 사항을 웹 페이지에 보여주기 위한 용도의 코드임.
+
+	// 수정한 상품정보의 내용을 조회(출력)하기 위한 SQL문 작성
+	 String jsql2 =  "SELECT * FROM GOODS WHERE prdNo=?";  	 
+	 PreparedStatement  pstmt2 = con.prepareStatement(jsql2);
+	 pstmt2.setString(1, no);
+
+	 ResultSet rs = pstmt2.executeQuery();
+     rs.next();
+%>
+
+<font color="blue" size='6'><b> 수정된 상품정보는 다음과 같습니다.</b></font><p>
+<table border="2" cellpadding="10" style="font-size:10pt;font-family:맑은 고딕">	
+		<tr><td>카테고리분류</td> <td><%=rs.getString("ctgType")%></td></tr>
+		<tr><td>상품번호</td> <td><%=rs.getString("prdNo")%></td></tr>
+		<tr><td>상품명</td> <td><%=rs.getString("prdName")%></td></tr>
+		<tr><td>상품가격</td><td><%=rs.getInt("prdPrice")%> 원</td></tr>
+		<tr><td>재고수량</td><td><%=rs.getInt("prdStock")%> 개</td></tr>
+		<tr><td>제조회사</td> <td><%=rs.getString("prdCompany")%></td></tr>		
+		<tr><td>상품설명</td> <td  width=300><%=rs.getString("prdDescription")%></td></tr>
+</table><p>
+<a href="selectAllGoods.jsp" align=center style="font-size:10pt;font-family:맑은 고딕">전체 등록상품 조회</a>
+<%
+    } catch (Exception e) {
+    	out.println(e);
+}
+%>
+</center>
+</body>
+</html>

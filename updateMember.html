@@ -1,0 +1,178 @@
+<%@ page contentType="text/html;charset=euc-kr" %>
+<%@ page import="java.sql.*" %>
+<html>
+<head>
+	   <!-- Favicon-->
+        <link href="css/stylesmanager1.css" rel="stylesheet" />
+	
+	</head>
+<body>
+		 <div class="menu_01">
+ 
+<div class="ADMIN">ADMIN 님</div>
+<div class="menu_02">
+  <div class="menu_target">상품관리</div>
+  
+  <br>
+  상품조회/수정
+  <br>
+  상품 등록
+			  <br>
+  계정 변경
+			   <br>
+  계정 탈퇴</div>
+       </div>
+		 <form>
+			 <div class="container px-4">
+		
+<div class="row">
+<div class="col mb-5">
+        <div class="card h-100">
+
+<%	 
+try {
+ 	 String DB_URL="jdbc:mysql://localhost:3306/project";  
+     String DB_ID="multi";  
+     String DB_PASSWORD="abcd";
+ 	 
+	 Class.forName("org.gjt.mm.mysql.Driver"); 
+ 	 Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PASSWORD);
+	
+	 String key = request.getParameter("id");   
+	 String jsql = "select * from member where memId = ?";
+	 PreparedStatement pstmt = con.prepareStatement(jsql);
+	 pstmt.setString(1,key);
+
+	 ResultSet rs = pstmt.executeQuery();
+	 rs.next();
+			
+	 String id = rs.getString("memId");
+   	 String passwd = rs.getString("memPasswd");
+	 String name = rs.getString("memName");
+	 String joomin = rs.getString("memJoomin");
+	 Date birth = rs.getDate("memBirth");
+	 String solar = rs.getString("memSolar");
+	 String tel = rs.getString("memTel");
+	 String address = rs.getString("memAddress");
+	 String phone = rs.getString("memPhone");
+	 String sex = rs.getString("memSex");
+	 String hobby = rs.getString("memHobby");
+	 String job = rs.getString("memJob");
+%>
+
+<center>
+<p>
+	<form method=post action="updateMemberResult.jsp">
+		<article class="name01">
+	<table border=0 cellpadding=5   >
+		<tr>
+			<td class="td_name" width="10%">ID</td>
+			<td ><input type=hidden name="id" value="<%=id%>" class="td_text01" ><%=id%></td>
+		</tr>
+		<tr>
+			<td class="td_name">비밀번호</td>
+			<td><input type=text name="passwd" value="<%=passwd%>" class="td_text01"></td>
+		</tr>
+		<tr>
+			<td class="td_name">성명</td>
+			<td><input type=text name="name" value="<%=name%>" class="td_text01"></td>
+		</tr>
+		<tr>
+			<td class="td_name">주민번호</td>
+			<td>
+<%
+	    	String[ ]  joominArr = joomin.split("-");   
+  // String  joominArr[ ] = joomin.split("-");와 동일
+  // split()함수 안의 인수를 기준으로 문자열들을 각각 분할하여 배열의 요소들에 
+  // 순서대로 저장시킴.  즉, 하이픈(-)을 중심으로 주민번호 앞 6자리와 뒤 7자리를 
+  // 별도의 문자열들로 분리 후, joominArr[0]와 joominArr[1]에 각각 저장시킴
+%>		
+		    <input type=text name="joomin1" value="<%=joominArr[0]%>" size="6"> -
+			<input type=text name="joomin2" value="<%=joominArr[1]%>" size="7">
+			</td>
+		</tr>
+		<tr>
+			 <td class="td_name">생일</td>
+			<td>
+<%
+	    	String[ ]  birthArr = birth.toString().split("-");  
+//  split()함수는 String 타입에서만 사용가능하므로, toString()메소드를 사용하여 birth의
+//  타입을 Date타입에서 String타입으로 형(type) 변환 후, split()함수를 적용시켜 년,월,일을 분리함.
+//  즉, birthArr[0]에는 "년",  birthArr[1]에는 "월", birthArr[2]에는 "일"이 각각 분리되어 저장됨
+%>		
+		    <input type=text name="birthYear" value="<%=birthArr[0]%>" size="4" >년
+		    <input type=text name="birthMonth" value="<%=birthArr[1]%>" size="2">월
+		    <input type=text name="birthDay" value="<%=birthArr[2]%>" size="2">일
+<%
+	if (solar.equals("양력"))
+	{
+%>
+				<input type=radio name=solar value="양력" checked>양력
+				<input type=radio name=solar value="음력">음력
+<%
+	}
+	else
+	{
+%>
+				<input type=radio name=solar value="양력">양력
+				<input type=radio name=solar value="음력" checked>음력
+<%
+	}
+%>
+			</td>
+		</tr>
+		<tr>
+			<td class="td_name">전화번호</td>
+			<td><input type=text name="telephone" value="<%=tel%>"class="td_text01" ></td>
+		</tr>
+	<tr>
+			<td class="td_name">휴대폰</td>
+			<td><input type=text name="telephone" value="<%=tel%>"class="td_text01"></td>
+		</tr>
+		<tr>
+			<td class="td_name">주소</td>
+			<td><input type=text name="address" value="<%=address%>"class="td_text01"></td>
+		</tr>
+		
+		<tr>
+			<td class="td_name">성별</td>
+			<td>
+<%
+		if(sex.equals("남"))
+		{
+%>
+				<input type=radio name=sex value="남" checked>남
+				<input type=radio name=sex value="여">여
+<%
+		}	
+		else
+		{
+%>
+				<input type=radio name=sex value="남">남
+				<input type=radio name=sex value="여" checked>여
+<%
+	}
+%>				
+			</td>
+		</tr>
+	
+		
+		
+	</table></article>
+	<div class="td_text_right">
+      <input type="submit" class="td_text03" value="수정완료">
+    </div>
+	</form>
+<%
+    } catch (Exception e) {
+      out.println(e);	
+}
+%>
+</center>
+			</div>
+	</div>
+       </div>
+		 </div>
+     
+</body>
+</html>

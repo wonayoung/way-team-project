@@ -1,0 +1,265 @@
+@charset "UTF-8";
+
+
+input[type=radio]{
+	display:none;
+}
+.period input:checked ~ span, .delivery_status input:checked ~ span {
+    background-color: #000099;
+  
+    color: #fff;
+    font-weight: 700;
+}
+.title  {
+	padding-left: 16px;
+	text-align: left;
+	letter-spacing: 0px;
+	color: #000000;
+	float: left;
+	clear: left;
+	font-weight: bold;
+	font-size: 16px;
+}.search_detail .period_box .calendarWrap {
+    display: inline-block;
+    margin-left: 14px;
+    font-size: 12px;
+}
+
+.period_box{
+	float: left;
+	clear: left;
+}
+.mytmonCalendar    {
+
+    float: left;
+
+}
+.mytmonCalendar1 {
+
+	   
+}
+.myDeliveryreset{
+    float: left;
+    width: 50%;
+    height: 40px;
+	border: 1.5px solid #000099;
+	background-color: #fff;
+	color: #000;
+}
+.myDeliverysearch{
+	width: 50%;
+	height: 40px;
+	border: none;
+	background-color: #000099;
+	color: #FFFFFF;
+}
+td,tr{
+	padding-top: 23px;
+	padding-bottom: 17px;
+
+	padding-right: 4px;
+}
+.table_left > td, tr
+{
+	padding-top: 23px;
+	padding-bottom: 17px;
+padding-left: 19px;
+	padding-right: 4px;
+}
+.top_period> td, tr
+{
+	padding-top: 23px;
+	padding-bottom: 17px;
+padding-left: 19px;
+	padding-right: 4px;
+}
+.on   {
+	list-style-type: none;
+}
+
+.num_list  {
+    display: flex;
+    align-items: center;
+   
+    margin-right: 30px;
+}
+.prev   {
+	background-image: url(url);
+	margin-right:-16px;
+}
+
+.prev{
+text-align: center;
+font: normal normal medium 22px/32px Noto Sans KR;
+letter-spacing: -0.44px;
+color: #707070;
+opacity: 1;
+	float: right;
+	margin-top: -13px;
+	    position: relative;
+    left: -8px;
+}
+.next   {
+	font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-medium) var(--unnamed-font-size-22)/var(--unnamed-line-spacing-32) var(--unnamed-font-family-noto-sans-kr);
+letter-spacing: var(--unnamed-character-spacing--0-44);
+color: var(--unnamed-color-707070);
+text-align: center;
+font: normal normal medium 22px/32px Noto Sans KR;
+letter-spacing: -0.44px;
+color: #707070;
+opacity: 1;
+	float: right;
+	margin-top: -13px;
+	    position: relative;
+    left: -8px;
+}
+.next1   {
+		font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-medium) var(--unnamed-font-size-22)/var(--unnamed-line-spacing-32) var(--unnamed-font-family-noto-sans-kr);
+letter-spacing: var(--unnamed-character-spacing--0-44);
+color: var(--unnamed-color-707070);
+text-align: center;
+font: normal normal medium 22px/32px Noto Sans KR;
+letter-spacing: -0.44px;
+color: #707070;
+opacity: 1;
+	float: right;
+	margin-top: 15px;
+	    position: relative;
+    left: -8px;
+}
+
+.pagination {
+	font: Noto Sans KR;
+    margin-top: 19px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 15px;
+	
+    line-height: 1;
+    position: relative;
+    padding: 20px 0;
+    vertical-align: middle;
+}
+.calendarText     {
+	display: inline-block;
+	position: relative;
+	width: 130px;
+	height: 36px;
+	box-sizing: border-box;
+	border: 1px solid #707070;
+	vertical-align: middle;
+	background-color: #fff;
+	color: #707070;
+	font-size: 12px;
+	text-align: left;
+	padding: 0 10px;
+	padding-left: 15px;
+	line-height: 37px;
+	outline: 0;
+	
+	
+}
+.calendarText2     {
+	display: inline-block;
+	position: relative;
+	width: 130px;
+	height: 36px;
+	box-sizing: border-box;
+	border: 1px solid #707070;
+	vertical-align: middle;
+	background-color: #fff;
+	color:#707070;
+	font-size: 12px;
+	text-align: left;
+	padding: 0 10px;
+	padding-left: 15px;
+	line-height: 37px;
+	outline: 0;
+	
+	
+}
+
+.calendarText1     {
+	display: inline-block;
+	position: relative;
+
+	box-sizing: border-box;
+	
+}
+.search_detail .period_box .period_left {
+	float: left;
+	clear: left;
+}
+td .period_left .f_color {
+	font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-medium) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-29) var(--unnamed-font-family-noto-sans-kr);
+letter-spacing: var(--unnamed-character-spacing-0);
+color: var(--unnamed-color-707070);
+text-align: left;
+font: normal normal medium 20px/29px Noto Sans KR;
+letter-spacing: 0px;
+color: #707070;
+}
+
+.search_detail .period_box .period_right {
+	float: right;
+}
+.container.px-4.px-lg-5 .table_period {
+	background: #FFFFFF 0% 0% no-repeat padding-box;
+	opacity: 1;
+	border-top: 1.5px  solid #000099;
+	border-right: 1.5px  solid #000099;
+	border-left: 1.5px  solid #000099;
+}
+.container.px-4.px-lg-5 .hr_username {
+border: 1px solid #000099;
+opacity: 1;
+}
+.container.px-4.px-lg-5 .blank {
+	margin-bottom: 40px;
+}
+.container.px-4.px-lg-5 .left_username {
+	text-align: left;
+	line-height: 44px;
+	font-weight: bold;
+	font-size: 14px;
+	font-family: Noto Sans KR;
+	letter-spacing: 0px;
+	color: #000000;
+	opacity: 1;
+	margin-bottom: -18px;
+}
+
+
+.period1 {
+  margin-right: 16px;
+  width: 66px;
+  height: 36px;
+
+  margin-left: 10px;
+  display: inline-block;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #707070;
+  font-size: 12px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+
+
+.container.px-4.px-lg-5 table .top_period {
+position: relative;
+    top: -16px;
+}
+.container.px-4.px-lg-5 .pagination {
+	margin: 0 auto;
+}
+.mypage_menu:hover {
+	font-weight: bold;
+}
+
+
+.product_line{border: 1px solid #eeeeee;}form .table_period .table_left {
+	margin-left: 15px;
+}

@@ -1,0 +1,83 @@
+<%@ page contentType="text/html;charset=euc-kr" %>
+<%@ page import="java.sql.*" %>
+<html><head><title>상품 정보 수정</title></head>
+<body><center>
+
+<%
+try {
+ 	 String DB_URL="jdbc:mysql://localhost:3306/project";  //  접속할 DB명
+     String DB_ID="multi";  //  접속할 아이디
+     String DB_PASSWORD="abcd"; // 접속할 패스워드
+ 	 
+	 Class.forName("org.gjt.mm.mysql.Driver");  // JDBC 드라이버 로딩
+ 	 Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PASSWORD);
+
+ 	 String key = request.getParameter("prdNo");
+
+	 String jsql = "SELECT * FROM GOODS WHERE prdNo = ?";       
+	 PreparedStatement  pstmt  = con.prepareStatement(jsql);
+	 pstmt.setString(1, key);
+
+	 ResultSet rs = pstmt.executeQuery();//SQL문 실행	
+	 rs.next();
+
+	 String no = rs.getString("prdNo");
+	 String name =  rs.getString("prdName");	
+	 int price =  rs.getInt("prdPrice");
+	 int stock =  rs.getInt("prdStock");	
+	 String  company = rs.getString("prdCompany");
+	 String description =  rs.getString("prdDescription");
+	 String ctg =  rs.getString("ctgType");
+%>
+
+<font color="blue" size='6'><b>[상품 정보 수정]</b></font><p>
+<form method="post" action="updateGoodsResult.jsp">
+<table border="2" cellpadding="10"  style="font-size:10pt;font-family:맑은 고딕">		
+		<tr>
+				<td>카테고리분류</td>
+				<td><input type=text name="ctg" value="<%=ctg%>"></td>
+				<td rowspan="7"><img src="images\<%=no%>.jpg" width="300" height="300"></td>
+		</tr>
+		<tr>
+				<td>상품번호</td>
+				<td><input type="hidden" name="no" value="<%=no%>" ><%=no%></td>
+	    </tr>
+		<tr>
+				<td>상품명</td>
+				<td><input type=text name="name" value="<%=name%>"></td>
+		</tr>
+		<tr>
+				<td>상품가격</td>
+				<td><input type=text name="price" value="<%=price%>"> 원</td>
+		</tr>
+		<tr>
+				<td>재고수량</td>
+				<td><input type=text name="stock" value="<%=stock%>"> 개</td>
+		</tr>
+		<tr>
+				<td>제조회사</td>
+				<td><input type=text name="company" value="<%=company%>"></td>
+		</tr>
+		<tr>
+			<td>상품설명 :  </td>
+			<td><textarea name="description" rows="5" cols="30"><%=description%> </textarea></td>	
+		</tr>	
+</table><p> 
+
+<br>
+<img src="./images/<%=no%>_detail.jpg" width=700 height=700 border=0>
+<br><br><br>
+
+<input type="submit" value="수정완료">
+</form>
+<br><br><br>
+
+
+<%
+    } catch (Exception e) {
+    	out.println(e);
+}
+%>
+</center>
+</body>
+</html>

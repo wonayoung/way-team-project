@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>무제 문서</title>
+</head>
+	 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+<link href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" rel="stylesheet"/>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+<link href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" rel="stylesheet"/>
+
+<style>
+
+.sliderContainer {
+  position: relative;
+}
+
+.slider {
+  width: 100%;
+height: 80vh;
+}
+
+.single-item {
+  background: blue;
+  color: white;
+  padding: 80px 0 120px;
+  font-size: 30px;
+  font-family: "Arial", "Helvetica";
+  text-align: center;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black;
+}
+
+.slick-dots {
+  bottom: -30px;
+}
+
+.single-item:nth-child(odd) {
+  background: green;
+}
+
+.progressBarContainer {
+    position: absolute;
+    bottom: 20px;
+    width: 300px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+.progressBarContainer div {
+  display: block;
+  width: 30%;
+  padding: 0;
+  cursor: pointer;
+  margin-right: 5%;
+  float: left;
+  color: white;
+}
+
+.progressBarContainer div:last-child {
+  margin-right: 0;
+}
+
+.progressBarContainer div span.progressBar {
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.4);
+  display: block;
+}
+
+.progressBarContainer div span.progressBar .inProgress {
+  background-color: rgba(255, 255, 255, 1);
+  width: 0%;
+  height: 4px;
+}
+
+
+
+/* Custom */
+
+.slick-dots li button:before {
+    font-family: 'slick';
+    font-size: 6px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    background: red;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    content: '';
+    text-align: center;
+    opacity: .25;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.slick-dots li {
+  width: 100px;
+}
+.slick-dots li.slick-active button:before {
+    opacity: .25;
+    color: black;
+}
+.slick-dots li.slick-active button:after {
+    font-family: 'slick';
+    font-size: 6px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    opacity:1;
+    background: blue;
+    left: 0;
+    width:80px;
+    height: 3px;
+    content: '';
+    text-align: center;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    z-index:9999999999999;
+
+    animation-name: progress;
+     animation-timing-function: linear;
+    animation-duration: 2600ms;
+    animation-delay:0;
+}
+	img{
+		width: 100%;
+	 height: 80vh;
+	background-position: center center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	}
+@keyframes progress {
+  from { width: 0px;}
+  to {width: 80px;}
+}
+</style>
+<body>
+
+
+<div class="sliderContainer">
+  <div class="slider single-item">
+    <div ><img src="images/keyimages/keyimage1.png"></div>
+    <div><img src="images/keyimages/keyimage2.png">Slide2</div>
+    <div><img src="images/keyimages/keyimage3.png">Slide3</div>
+  </div>
+  <div class="progressBarContainer">
+    <div class="item">
+      <h3>Slide 1</h3>
+      <span data-slick-index="0" class="progressBar"></span>
+    </div>
+    <div class="item">
+      <h3>Slide 2</h3>
+      <span data-slick-index="1" class="progressBar"></span>
+    </div>
+    <div class="item">
+      <h3>Slide 3</h3>
+      <span data-slick-index="2" class="progressBar"></span>
+    </div>
+  </div>
+</div>
+
+<!-- END SLICK SLIDER -->  <script src="autoslider.js"></script>
+</body>
+</html>
